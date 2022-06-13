@@ -8,6 +8,7 @@ import com.cmc.demoshopee.repository.UserRepository;
 import com.cmc.demoshopee.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -19,6 +20,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     private UserRepository userRepository;
@@ -43,6 +47,8 @@ public class UserController {
     @PostMapping("/")
     public User createUser(@RequestBody User user){
         user.setProfile("default.png");
+        //encoding password with BCryptPasswordEncoder
+        user.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
         Set<UserRole> roles = new HashSet<>();
 
         Role role = new Role();

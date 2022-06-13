@@ -3,6 +3,7 @@ package com.cmc.demoshopee.service.impl;
 import com.cmc.demoshopee.entity.User;
 import com.cmc.demoshopee.entity.UserRole;
 import com.cmc.demoshopee.exception.NotFoundException;
+import com.cmc.demoshopee.exception.UserFoundExeption;
 import com.cmc.demoshopee.repository.RoleRepository;
 import com.cmc.demoshopee.repository.UserRepository;
 import com.cmc.demoshopee.service.UserService;
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
         User local = this.userRepository.findByUsername(user.getUsername());
         if(local != null){
             System.out.println("Username is existed !!");
-            throw new NotFoundException("Username is existed !!");
+            throw new UserFoundExeption();
         } else {
             //user create
             for(UserRole ur:userRoles){
