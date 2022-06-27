@@ -1,5 +1,6 @@
 package com.cmc.demoshopee.service.impl;
 
+import com.cmc.demoshopee.entity.exam.Category;
 import com.cmc.demoshopee.entity.exam.Quiz;
 import com.cmc.demoshopee.repository.QuizRepository;
 import com.cmc.demoshopee.service.QuizService;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -38,4 +40,21 @@ public class QuizServiceImpl implements QuizService {
     public void deleteQuiz(Integer quizId) {
         this.quizRepository.deleteById(quizId);
     }
+
+    @Override
+    public List<Quiz> getQuizzesOfCategory(Category category) {
+        return this.quizRepository.findByCategory(category);
+    }
+
+    //get active quizzes
+    @Override
+    public List<Quiz> getActiveQuizzes() {
+        return this.quizRepository.findByActive(true);
+    }
+
+    @Override
+    public List<Quiz> getActiveOfCategory(Category c) {
+        return this.quizRepository.findByCategoryAndActive(c, true);
+    }
+
 }

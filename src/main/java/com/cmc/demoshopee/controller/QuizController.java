@@ -1,11 +1,14 @@
 package com.cmc.demoshopee.controller;
 
+import com.cmc.demoshopee.entity.exam.Category;
 import com.cmc.demoshopee.entity.exam.Quiz;
 import com.cmc.demoshopee.repository.QuizRepository;
 import com.cmc.demoshopee.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin("*")
@@ -42,5 +45,26 @@ public class QuizController {
     @DeleteMapping("/{qid}")
     public void delete(@PathVariable("qid") int qid){
         this.quizService.deleteQuiz(qid);
+    }
+
+    @GetMapping("/category/{cid}")
+    public List<Quiz> getQuizzesOfCategory(@PathVariable("cid") Integer cid){
+        Category category = new Category();
+        category.setCid(cid);
+        return this.quizService.getQuizzesOfCategory(category);
+    }
+
+    //get active quizzes
+    @GetMapping("/active")
+    public List<Quiz> getActiveQuizzes(){
+        return this.quizService.getActiveQuizzes();
+    }
+
+    //get active quizzes of category
+    @GetMapping("/category/active/{cid}")
+    public List<Quiz> getActiveQuizzesOfCategory(@PathVariable("cid") int cid){
+        Category category = new Category();
+        category.setCid(cid);
+        return this.quizService.getActiveOfCategory(category);
     }
 }
